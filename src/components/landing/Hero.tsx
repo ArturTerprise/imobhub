@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
+
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden pt-20">
@@ -57,9 +59,11 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button className="btn-accent text-base px-8 py-6 h-auto rounded-full group">
-              Agendar Demonstração
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            <Button className="btn-accent text-base px-8 py-6 h-auto rounded-full group" asChild>
+              <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
+                Agendar Demonstração
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </a>
             </Button>
             <Button
               variant="ghost"

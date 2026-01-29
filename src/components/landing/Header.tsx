@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-imobhub.png";
+
+const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o ImobHub.";
+const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
 const navItems = [
   { label: "Funcionalidades", href: "#features" },
   { label: "Integrações", href: "#integrations" },
-  { label: "Sobre", href: "#about" },
+  { label: "Sobre", href: "/sobre" },
 ];
 
 export function Header() {
@@ -35,32 +40,48 @@ export function Header() {
       <div className="container-custom">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <span className="text-2xl font-extrabold tracking-tight">
-              Imob<span className="text-accent">Hub</span>
-            </span>
-          </a>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="ImobHub" className="h-10 w-auto" />
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="nav-link text-sm"
-              >
-                {item.label}
-              </a>
+              item.href.startsWith("#") ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="nav-link text-sm"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="nav-link text-sm"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </div>
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" className="font-medium">
-              Login
+            <Button
+              variant="ghost"
+              className="font-medium"
+              asChild
+            >
+              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                Fale Conosco
+              </a>
             </Button>
-            <Button className="btn-accent text-sm px-6 py-2 h-auto rounded-full">
-              Agendar Demo
+            <Button className="btn-accent text-sm px-6 py-2 h-auto rounded-full" asChild>
+              <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
+                Agendar Demo
+              </a>
             </Button>
           </div>
 
@@ -85,21 +106,36 @@ export function Header() {
           >
             <div className="container-custom py-6 flex flex-col gap-4">
               {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="nav-link text-lg py-2"
-                >
-                  {item.label}
-                </a>
+                item.href.startsWith("#") ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="nav-link text-lg py-2"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="nav-link text-lg py-2"
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="ghost" className="w-full justify-center">
-                  Login
+                <Button variant="ghost" className="w-full justify-center" asChild>
+                  <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                    Fale Conosco
+                  </a>
                 </Button>
-                <Button className="btn-accent w-full justify-center rounded-full">
-                  Agendar Demo
+                <Button className="btn-accent w-full justify-center rounded-full" asChild>
+                  <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
+                    Agendar Demo
+                  </a>
                 </Button>
               </div>
             </div>
