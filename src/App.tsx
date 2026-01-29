@@ -13,6 +13,14 @@ import Termos from "./pages/Termos";
 import Privacidade from "./pages/Privacidade";
 import NotFound from "./pages/NotFound";
 
+// Blog posts
+import CrmImobiliario from "./pages/blog/CrmImobiliario";
+import IntegracaoPortais from "./pages/blog/IntegracaoPortais";
+import GestaoComissoes from "./pages/blog/GestaoComissoes";
+import AssinaturaDigital from "./pages/blog/AssinaturaDigital";
+import WhatsAppImobiliarias from "./pages/blog/WhatsAppImobiliarias";
+import SiteImobiliario from "./pages/blog/SiteImobiliario";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -25,6 +33,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/crm-imobiliario" element={<CrmImobiliario />} />
+          <Route path="/blog/integracao-portais" element={<IntegracaoPortais />} />
+          <Route path="/blog/gestao-comissoes" element={<GestaoComissoes />} />
+          <Route path="/blog/assinatura-digital" element={<AssinaturaDigital />} />
+          <Route path="/blog/whatsapp-imobiliarias" element={<WhatsAppImobiliarias />} />
+          <Route path="/blog/site-imobiliario" element={<SiteImobiliario />} />
           <Route path="/carreiras" element={<Carreiras />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/contato" element={<Contato />} />

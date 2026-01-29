@@ -1,56 +1,62 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const blogPosts = [
   {
     id: 1,
+    slug: "crm-imobiliario",
     title: "Como aumentar suas vendas com um CRM imobiliário eficiente",
     excerpt: "Descubra as melhores práticas para utilizar um CRM e converter mais leads em vendas.",
     category: "Vendas",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "5 min",
   },
   {
     id: 2,
+    slug: "integracao-portais",
     title: "A importância da integração com portais imobiliários",
     excerpt: "Entenda como a publicação automática em portais pode economizar tempo e aumentar sua visibilidade.",
     category: "Marketing",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "4 min",
   },
   {
     id: 3,
+    slug: "gestao-comissoes",
     title: "Gestão de comissões: como organizar os pagamentos da sua equipe",
     excerpt: "Dicas práticas para gerenciar comissões de corretores de forma transparente e eficiente.",
     category: "Gestão",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "6 min",
   },
   {
     id: 4,
+    slug: "assinatura-digital",
     title: "Assinatura digital: agilize seus contratos imobiliários",
     excerpt: "Conheça os benefícios de utilizar assinatura digital e como implementar na sua imobiliária.",
     category: "Tecnologia",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "5 min",
   },
   {
     id: 5,
+    slug: "whatsapp-imobiliarias",
     title: "WhatsApp para imobiliárias: melhores práticas de atendimento",
     excerpt: "Aprenda a utilizar o WhatsApp de forma profissional para atender e converter leads.",
     category: "Atendimento",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "7 min",
   },
   {
     id: 6,
+    slug: "site-imobiliario",
     title: "Como criar um site imobiliário que converte",
     excerpt: "Os elementos essenciais para um site de imobiliária de alta performance.",
     category: "Marketing",
-    date: "Em breve",
+    date: "Janeiro 2025",
     readTime: "8 min",
   },
 ];
@@ -98,54 +104,38 @@ export default function Blog() {
                   viewport={{ once: true }}
                   className="bg-card rounded-xl overflow-hidden border border-border hover:border-accent/30 transition-all duration-300 group"
                 >
-                  <div className="h-48 bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
-                    <span className="px-3 py-1 bg-accent/20 rounded-full text-sm text-accent font-medium">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {post.date}
+                  <Link to={`/blog/${post.slug}`}>
+                    <div className="h-48 bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
+                      <span className="px-3 py-1 bg-accent/20 rounded-full text-sm text-accent font-medium">
+                        {post.category}
                       </span>
-                      <span>{post.readTime} de leitura</span>
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 group-hover:text-accent transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {post.excerpt}
-                    </p>
-                    <span className="inline-flex items-center text-sm text-accent font-medium">
-                      Em breve
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </span>
-                  </div>
+                    <div className="p-6">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {post.readTime}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-semibold mb-2 group-hover:text-accent transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {post.excerpt}
+                      </p>
+                      <span className="inline-flex items-center text-sm text-accent font-medium group-hover:gap-2 transition-all">
+                        Ler artigo
+                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </Link>
                 </motion.article>
               ))}
             </div>
-
-            {/* Newsletter CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="mt-16 bg-accent/10 rounded-2xl p-8 text-center"
-            >
-              <h3 className="text-2xl font-bold mb-3">Quer ser o primeiro a ler?</h3>
-              <p className="text-muted-foreground mb-6">
-                Nosso blog está em desenvolvimento. Em breve, conteúdos exclusivos para você!
-              </p>
-              <Link
-                to="/contato"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground rounded-full font-medium hover:bg-accent/90 transition-colors"
-              >
-                Entre em contato
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
           </div>
         </section>
       </main>
