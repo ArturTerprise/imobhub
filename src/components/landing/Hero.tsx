@@ -95,12 +95,12 @@ export function Hero() {
               <span className="text-sm font-medium">+80 clientes ativos</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-accent">&lt;3%</span>
-              <span className="text-sm">taxa de churn</span>
+              <span className="text-2xl font-bold text-accent">97%</span>
+              <span className="text-sm">satisfação</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm">Suporte em</span>
-              <span className="text-2xl font-bold text-accent">&lt;2h</span>
+              <span className="text-sm">Suporte</span>
+              <span className="text-lg font-bold text-accent">técnico de verdade</span>
             </div>
           </motion.div>
         </div>

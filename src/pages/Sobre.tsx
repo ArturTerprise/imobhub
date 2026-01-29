@@ -97,16 +97,12 @@ export default function Sobre() {
                     <p className="text-sm text-muted-foreground mt-1">Clientes ativos</p>
                   </div>
                   <div className="text-center">
-                    <span className="text-4xl font-bold text-accent">&lt;3%</span>
-                    <p className="text-sm text-muted-foreground mt-1">Taxa de churn</p>
-                  </div>
-                  <div className="text-center">
                     <span className="text-4xl font-bold text-accent">97%</span>
                     <p className="text-sm text-muted-foreground mt-1">Satisfação</p>
                   </div>
-                  <div className="text-center">
-                    <span className="text-4xl font-bold text-accent">&lt;2h</span>
-                    <p className="text-sm text-muted-foreground mt-1">Tempo de suporte</p>
+                  <div className="text-center col-span-2">
+                    <span className="text-2xl font-bold text-accent">Suporte técnico de verdade</span>
+                    <p className="text-sm text-muted-foreground mt-1">Pessoas reais que entendem do mercado</p>
                   </div>
                 </div>
               </motion.div>

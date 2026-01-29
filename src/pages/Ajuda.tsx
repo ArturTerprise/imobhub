@@ -4,7 +4,6 @@ import { Footer } from "@/components/landing/Footer";
 import { Search, Book, MessageCircle, Video, FileText, HelpCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Preciso de ajuda com o ImobHub.";
 
@@ -57,20 +56,20 @@ const categories = [
 
 const faqs = [
   {
-    question: "Como faço para importar meus imóveis?",
-    answer: "Você pode importar seus imóveis através de planilha Excel ou CSV. Acesse Configurações > Importação e siga o passo a passo.",
+    question: "O CRM já integra nativamente com os portais imobiliários?",
+    answer: "Sim! O ImobHub possui integração nativa de mão dupla com os principais portais (Canal Pro, Chaves na Mão, 62 Imóveis, Imóvel Web). Isso significa que seus imóveis são publicados automaticamente E os leads que chegam pelos portais entram direto no CRM, prontos para distribuição.",
+  },
+  {
+    question: "O sistema gera contratos automaticamente preenchidos e integra com Imobitech?",
+    answer: "Sim! O ImobHub gera contratos automaticamente preenchidos com os dados do cliente, imóvel e condições da venda. Além disso, temos integração nativa com a Imobitech para split automático de pagamentos de comissões.",
   },
   {
     question: "Posso integrar com meu site atual?",
     answer: "Sim! O ImobHub oferece integração via API com seu site atual ou você pode utilizar nosso site integrado.",
   },
   {
-    question: "Como funciona a distribuição de leads?",
-    answer: "Os leads são distribuídos automaticamente via WhatsApp para seus corretores, com filtros personalizáveis por região, tipo de imóvel e outros critérios.",
-  },
-  {
     question: "Qual o prazo de resposta do suporte?",
-    answer: "Nossa equipe de suporte responde em até 2 horas durante o horário comercial (seg-sex, 8h-18h).",
+    answer: "Nosso suporte é técnico de verdade – pessoas reais que entendem do mercado imobiliário. Respondemos rapidamente durante o horário comercial (seg-sex, 8h-18h).",
   },
 ];
 
@@ -197,7 +196,7 @@ export default function Ajuda() {
             >
               <h3 className="text-2xl font-bold mb-3">Não encontrou o que procura?</h3>
               <p className="text-muted-foreground mb-6">
-                Nossa equipe está pronta para ajudar você pelo WhatsApp.
+                Nossa equipe de suporte técnico está pronta para ajudar você pelo WhatsApp.
               </p>
               <a
                 href={WHATSAPP_LINK}

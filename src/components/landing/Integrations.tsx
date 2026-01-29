@@ -91,22 +91,22 @@ export function Integrations() {
             </p>
           </motion.div>
 
-          {/* Integration Categories Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Integration Categories */}
+          <div className="space-y-12 mb-12">
             {integrationCategories.map((category, catIndex) => (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * catIndex }}
-                className="bg-card rounded-2xl p-6 border border-border hover:border-accent/30 transition-all duration-300"
               >
-                <div className="flex items-start gap-4 mb-6">
+                {/* Category Header */}
+                <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
                     <category.icon className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">
+                    <h3 className="text-xl font-semibold text-foreground">
                       {category.title}
                     </h3>
                     <p className="text-sm text-muted-foreground">
@@ -115,22 +115,26 @@ export function Integrations() {
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap items-center gap-3">
+                {/* Logos Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                   {category.integrations.map((integration, index) => (
                     <motion.div
                       key={`${category.title}-${integration.name}`}
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{ duration: 0.3, delay: 0.2 + 0.05 * index }}
                       className="group"
                     >
-                      <div className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-300 border border-border/50">
+                      <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 hover:border-accent/30 flex items-center justify-center min-h-[100px]">
                         <img
                           src={integration.logo}
                           alt={integration.name}
-                          className="h-10 w-auto min-w-[60px] max-w-[100px] object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="max-h-16 w-auto max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                         />
                       </div>
+                      <p className="text-center text-sm text-muted-foreground mt-2 font-medium">
+                        {integration.name}
+                      </p>
                     </motion.div>
                   ))}
                 </div>
