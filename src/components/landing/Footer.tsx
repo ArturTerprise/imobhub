@@ -1,24 +1,23 @@
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo-imobhub.png";
 
 const footerLinks = {
   produto: [
     { label: "Funcionalidades", href: "#features" },
     { label: "Integrações", href: "#integrations" },
-    { label: "Preços", href: "#" },
   ],
   empresa: [
-    { label: "Sobre nós", href: "#about" },
-    { label: "Blog", href: "#" },
-    { label: "Carreiras", href: "#" },
+    { label: "Sobre nós", href: "/sobre" },
+    { label: "Blog", href: "/blog" },
+    { label: "Carreiras", href: "/carreiras" },
   ],
   suporte: [
-    { label: "Central de Ajuda", href: "#" },
-    { label: "Contato", href: "#" },
-    { label: "Status", href: "#" },
+    { label: "Central de Ajuda", href: "/ajuda" },
+    { label: "Contato", href: "/contato" },
   ],
   legal: [
-    { label: "Privacidade", href: "#" },
-    { label: "Termos de Uso", href: "#" },
+    { label: "Privacidade", href: "/privacidade" },
+    { label: "Termos de Uso", href: "/termos" },
   ],
 };
 
@@ -29,9 +28,9 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <div className="text-2xl font-extrabold mb-4">
-              Imob<span className="text-accent">Hub</span>
-            </div>
+            <Link to="/">
+              <img src={logo} alt="ImobHub" className="h-10 w-auto mb-4 brightness-0 invert" />
+            </Link>
             <p className="text-sm text-primary-foreground/60 mb-4">
               O ecossistema completo para gestão imobiliária.
             </p>
@@ -48,12 +47,21 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.produto.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
+                  {link.href.startsWith("#") ? (
+                    <a
+                      href={link.href}
+                      className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -67,12 +75,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.empresa.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -86,12 +94,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.suporte.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -105,12 +113,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -122,26 +130,6 @@ export function Footer() {
           <p className="text-sm text-primary-foreground/60">
             © {new Date().getFullYear()} ImobHub. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-6">
-            <a
-              href="#"
-              className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-            >
-              Instagram
-            </a>
-            <a
-              href="#"
-              className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="#"
-              className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-            >
-              YouTube
-            </a>
-          </div>
         </div>
       </div>
     </footer>
