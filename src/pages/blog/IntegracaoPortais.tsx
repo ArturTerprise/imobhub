@@ -34,7 +34,7 @@ export default function IntegracaoPortais() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -100,9 +100,9 @@ export default function IntegracaoPortais() {
                 pelos portais são automaticamente importados para o CRM, prontos para distribuição.
               </p>
 
-              <h2>Portais integrados ao ImobHub</h2>
+              <h2>Portais integrados ao imobHUB</h2>
               <p>
-                O ImobHub oferece integração nativa com os principais portais do mercado:
+                O imobHUB oferece integração nativa com os principais portais do mercado:
               </p>
               <ul>
                 <li><strong>Canal Pro</strong> – Um dos maiores portais do Brasil</li>
@@ -116,10 +116,10 @@ export default function IntegracaoPortais() {
                 A verdadeira magia está na integração bidirecional:
               </p>
               <ul>
-                <li><strong>Envio:</strong> Imóveis cadastrados no ImobHub são automaticamente 
+                <li><strong>Envio:</strong> Imóveis cadastrados no imobHUB são automaticamente 
                 publicados nos portais selecionados</li>
                 <li><strong>Recebimento:</strong> Leads que chegam pelos portais são automaticamente 
-                importados para o CRM do ImobHub</li>
+                importados para o CRM do imobHUB</li>
               </ul>
               <p>
                 Isso significa que sua equipe trabalha em um único sistema, mas tem presença em 
@@ -128,7 +128,7 @@ export default function IntegracaoPortais() {
 
               <h2>Distribuição inteligente de leads</h2>
               <p>
-                Quando um lead chega de um portal, o ImobHub pode distribuí-lo automaticamente 
+                Quando um lead chega de um portal, o imobHUB pode distribuí-lo automaticamente 
                 para o corretor mais adequado, baseado em:
               </p>
               <ul>
@@ -148,7 +148,7 @@ export default function IntegracaoPortais() {
               <p>
                 Quer ver como funciona na prática? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração</Link> e 
-                conheça todas as integrações do ImobHub.
+                conheça todas as integrações do imobHUB.
               </p>
             </motion.article>
           </div>

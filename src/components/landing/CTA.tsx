@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { ArrowRight, Calendar, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o ImobHub.";
+const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o imobHUB.";
 const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
 export function CTA() {
@@ -32,7 +32,7 @@ export function CTA() {
             <span className="text-gradient">sua operação?</span>
           </h2>
           <p className="text-body-large mb-10">
-            Agende uma demonstração gratuita e descubra como o ImobHub 
+            Agende uma demonstração gratuita e descubra como o imobHUB 
             pode otimizar seus processos e aumentar suas vendas.
           </p>
 

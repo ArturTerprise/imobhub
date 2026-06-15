@@ -5,13 +5,13 @@ import { Search, Book, MessageCircle, Video, FileText, HelpCircle } from "lucide
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Preciso de ajuda com o ImobHub.";
+const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Preciso de ajuda com o imobHUB.";
 
 const categories = [
   {
     icon: Book,
     title: "Primeiros Passos",
-    description: "Aprenda a configurar e começar a usar o ImobHub",
+    description: "Aprenda a configurar e começar a usar o imobHUB",
     articles: [
       "Como criar sua conta",
       "Configuração inicial do sistema",
@@ -57,15 +57,15 @@ const categories = [
 const faqs = [
   {
     question: "O CRM já integra nativamente com os portais imobiliários?",
-    answer: "Sim! O ImobHub possui integração nativa de mão dupla com os principais portais (Canal Pro, Chaves na Mão, 62 Imóveis, Imóvel Web). Isso significa que seus imóveis são publicados automaticamente E os leads que chegam pelos portais entram direto no CRM, prontos para distribuição.",
-  },
+    answer: "Sim! O imobHUB possui integração nativa de mão dupla com os principais portais (Canal Pro, Chaves na Mão, 62 Imóveis, Imóvel Web). Isso significa que seus imóveis são publicados automaticamente E os leads que chegam pelos portais entram direto no CRM, prontos para distribuição.",
+  },  
   {
     question: "O sistema gera contratos automaticamente preenchidos e integra com Imobitech?",
-    answer: "Sim! O ImobHub gera contratos automaticamente preenchidos com os dados do cliente, imóvel e condições da venda. Além disso, temos integração nativa com a Imobitech para split automático de pagamentos de comissões.",
+    answer: "Sim! O imobHUB gera contratos automaticamente preenchidos com os dados do cliente, imóvel e condições da venda. Além disso, temos integração nativa com a Imobitech para split automático de pagamentos de comissões.",
   },
   {
     question: "Posso integrar com meu site atual?",
-    answer: "Sim! O ImobHub oferece integração via API com seu site atual ou você pode utilizar nosso site integrado.",
+    answer: "Sim! O imobHUB oferece integração via API com seu site atual ou você pode utilizar nosso site integrado.",
   },
   {
     question: "Qual o prazo de resposta do suporte?",

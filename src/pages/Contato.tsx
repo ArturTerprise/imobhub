@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de falar com a equipe ImobHub.";
+const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de falar com a equipe imobHUB.";
 
 const contactInfo = [
   {
@@ -88,7 +88,7 @@ export default function Contato() {
                 <span className="text-gradient">nossa equipe</span>
               </h1>
               <p className="text-body-large">
-                Tem dúvidas sobre o ImobHub? Quer saber como podemos ajudar sua 
+                Tem dúvidas sobre o imobHUB? Quer saber como podemos ajudar sua 
                 imobiliária? Entre em contato conosco!
               </p>
             </motion.div>

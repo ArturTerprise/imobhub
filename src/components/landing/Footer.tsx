@@ -35,7 +35,7 @@ export function Footer() {
               O ecossistema completo para gestão imobiliária.
             </p>
             <p className="text-sm text-primary-foreground/60">
-              by Terprise Soluções Digitais
+              by Terprise Software House
             </p>
           </div>
 
@@ -128,7 +128,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/60">
-            © {new Date().getFullYear()} ImobHub. Todos os direitos reservados.
+            © {new Date().getFullYear()} imobHUB. Todos os direitos reservados.
           </p>
         </div>
       </div>

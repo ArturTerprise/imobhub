@@ -34,7 +34,7 @@ export default function AssinaturaDigital() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -109,9 +109,9 @@ export default function AssinaturaDigital() {
                 <li>Distrato</li>
               </ul>
 
-              <h2>Plataformas integradas ao ImobHub</h2>
+              <h2>Plataformas integradas ao imobHUB</h2>
               <p>
-                O ImobHub oferece integração nativa com as principais plataformas de assinatura 
+                O imobHUB oferece integração nativa com as principais plataformas de assinatura 
                 digital do mercado:
               </p>
 
@@ -136,7 +136,7 @@ export default function AssinaturaDigital() {
 
               <h2>Como funciona a integração</h2>
               <p>
-                Com o ImobHub, o fluxo de assinatura digital é simples:
+                Com o imobHUB, o fluxo de assinatura digital é simples:
               </p>
               <ol>
                 <li>Gere o contrato a partir do sistema, usando os dados já cadastrados</li>
@@ -168,7 +168,7 @@ export default function AssinaturaDigital() {
               <p>
                 Quer implementar assinatura digital na sua imobiliária? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração</Link> e 
-                veja como o ImobHub pode ajudar.
+                veja como o imobHUB pode ajudar.
               </p>
             </motion.article>
           </div>
