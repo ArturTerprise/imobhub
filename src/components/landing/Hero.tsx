@@ -36,7 +36,7 @@ export function Hero() {
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground/80">
-              Agora com IA — a plataforma de mais de 80 imobiliárias
+              Agora com IA
             </span>
           </motion.div>
 
@@ -111,7 +111,6 @@ export function Hero() {
                   </div>
                 ))}
               </div>
-              <span className="text-sm font-medium">+80 clientes ativos</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-accent">97%</span>
