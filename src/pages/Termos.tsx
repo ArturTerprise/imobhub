@@ -35,14 +35,14 @@ export default function Termos() {
             >
               <h2>1. Aceitação dos Termos</h2>
               <p>
-                Ao acessar e usar o ImobHub, você concorda em cumprir e estar vinculado 
+                Ao acessar e usar o imobHUB, você concorda em cumprir e estar vinculado 
                 a estes Termos de Uso. Se você não concordar com qualquer parte destes 
                 termos, não deve usar nossos serviços.
               </p>
 
               <h2>2. Descrição do Serviço</h2>
               <p>
-                O ImobHub é uma plataforma de gestão imobiliária que oferece ferramentas 
+                O imobHUB é uma plataforma de gestão imobiliária que oferece ferramentas 
                 de CRM, portal de vendas, integrações com portais imobiliários e outras 
                 funcionalidades para imobiliárias e corretores de imóveis.
               </p>
@@ -55,24 +55,24 @@ export default function Termos() {
               </p>
 
               <h2>4. Uso Permitido</h2>
-              <p>Você concorda em usar o ImobHub apenas para fins legítimos e de acordo com:</p>
+              <p>Você concorda em usar o imobHUB apenas para fins legítimos e de acordo com:</p>
               <ul>
                 <li>Todas as leis e regulamentos aplicáveis</li>
-                <li>As diretrizes e políticas do ImobHub</li>
+                <li>As diretrizes e políticas do imobHUB</li>
                 <li>Os direitos de terceiros</li>
               </ul>
 
               <h2>5. Propriedade Intelectual</h2>
               <p>
-                Todo o conteúdo, recursos e funcionalidades do ImobHub são de 
-                propriedade exclusiva da Terprise Soluções Digitais e são protegidos 
+                Todo o conteúdo, recursos e funcionalidades do imobHUB são de 
+                propriedade exclusiva da Terprise Software House e são protegidos 
                 por leis de propriedade intelectual.
               </p>
 
               <h2>6. Dados e Privacidade</h2>
               <p>
                 O uso de seus dados pessoais é regido por nossa Política de 
-                Privacidade. Ao usar o ImobHub, você concorda com a coleta e 
+                Privacidade. Ao usar o imobHUB, você concorda com a coleta e 
                 uso de informações de acordo com essa política.
               </p>
 
@@ -85,14 +85,14 @@ export default function Termos() {
 
               <h2>8. Limitação de Responsabilidade</h2>
               <p>
-                O ImobHub é fornecido "como está" e não garantimos que o serviço 
+                O imobHUB é fornecido "como está" e não garantimos que o serviço 
                 será ininterrupto ou livre de erros. Não nos responsabilizamos 
                 por danos indiretos, incidentais ou consequenciais.
               </p>
 
               <h2>9. Rescisão</h2>
               <p>
-                Podemos suspender ou encerrar seu acesso ao ImobHub a qualquer 
+                Podemos suspender ou encerrar seu acesso ao imobHUB a qualquer 
                 momento, por qualquer motivo, incluindo violação destes termos.
               </p>
 

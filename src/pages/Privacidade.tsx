@@ -35,7 +35,7 @@ export default function Privacidade() {
             >
               <h2>1. Introdução</h2>
               <p>
-                A Terprise Soluções Digitais ("nós", "nosso" ou "ImobHub") está 
+                A Terprise Software House ("nós", "nosso" ou "imobHUB") está 
                 comprometida em proteger sua privacidade. Esta política descreve 
                 como coletamos, usamos e protegemos suas informações pessoais.
               </p>
@@ -107,7 +107,7 @@ export default function Privacidade() {
 
               <h2>9. Menores de Idade</h2>
               <p>
-                O ImobHub não é destinado a menores de 18 anos. Não coletamos 
+                O imobHUB não é destinado a menores de 18 anos. Não coletamos 
                 intencionalmente dados de menores.
               </p>
 

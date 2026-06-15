@@ -34,7 +34,7 @@ export default function GestaoComissoes() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -125,9 +125,9 @@ export default function GestaoComissoes() {
                 automatizando também a parte financeira.
               </p>
 
-              <h2>Como o ImobHub resolve isso</h2>
+              <h2>Como o imobHUB resolve isso</h2>
               <p>
-                O Portal de Vendas do ImobHub foi desenvolvido especificamente para resolver a 
+                O Portal de Vendas do imobHUB foi desenvolvido especificamente para resolver a 
                 complexidade das comissões imobiliárias:
               </p>
               <ul>
@@ -140,7 +140,7 @@ export default function GestaoComissoes() {
 
               <h2>A integração com Imobitech</h2>
               <p>
-                O ImobHub possui integração nativa com a Imobitech, uma pagadoria especializada em 
+                O imobHUB possui integração nativa com a Imobitech, uma pagadoria especializada em 
                 split de pagamentos para o mercado imobiliário. Com essa integração:
               </p>
               <ul>
@@ -158,7 +158,7 @@ export default function GestaoComissoes() {
               <p>
                 Quer simplificar a gestão de comissões da sua imobiliária? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração</Link> do 
-                Portal de Vendas do ImobHub.
+                Portal de Vendas do imobHUB.
               </p>
             </motion.article>
           </div>

@@ -34,7 +34,7 @@ export default function CrmImobiliario() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -113,9 +113,9 @@ export default function CrmImobiliario() {
                 <li><strong>Relatórios de performance</strong> individual e da equipe</li>
               </ul>
 
-              <h2>Como o ImobHub pode ajudar</h2>
+              <h2>Como o imobHUB pode ajudar</h2>
               <p>
-                O ImobHub foi desenvolvido especificamente para o mercado imobiliário brasileiro. 
+                O imobHUB foi desenvolvido especificamente para o mercado imobiliário brasileiro. 
                 Nossa plataforma oferece:
               </p>
               <ul>
@@ -133,7 +133,7 @@ export default function CrmImobiliario() {
                 realmente importa: construir relacionamentos e fechar negócios.
               </p>
               <p>
-                Quer ver na prática como o ImobHub pode transformar sua operação? 
+                Quer ver na prática como o imobHUB pode transformar sua operação? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração gratuita</Link> e 
                 descubra como mais de 80 imobiliárias já estão vendendo mais com nossa plataforma.
               </p>

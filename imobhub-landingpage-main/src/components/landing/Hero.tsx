@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { ArcadeEmbed } from "./ArcadeEmbed";
 
 // Client logos
-import cidadeviva from "@/assets/clients/cidadeviva.png";
+import kamanzi from "@/assets/clients/kamanzi.png";
 import alfacenter from "@/assets/clients/alfacenter.png";
 import aevo from "@/assets/clients/aevo.png";
-import amiz from "@/assets/clients/amiz.png";
+import gd from "@/assets/clients/gd.png";
 
 const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
-const clientLogos = [cidadeviva, alfacenter, aevo, amiz];
+const clientLogos = [kamanzi, alfacenter, aevo, gd];
 
 export function Hero() {
   const [showDemo, setShowDemo] = useState(false);

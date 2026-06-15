@@ -34,7 +34,7 @@ export default function WhatsAppImobiliarias() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -119,7 +119,7 @@ export default function WhatsAppImobiliarias() {
 
               <h2>Distribuição de leads via WhatsApp</h2>
               <p>
-                Um dos maiores diferenciais do ImobHub é a distribuição de leads diretamente 
+                Um dos maiores diferenciais do imobHUB é a distribuição de leads diretamente 
                 no WhatsApp dos corretores. Funciona assim:
               </p>
               <ol>
@@ -130,9 +130,9 @@ export default function WhatsAppImobiliarias() {
                 <li>Corretor pode responder diretamente pelo WhatsApp</li>
               </ol>
 
-              <h2>Filtros exclusivos do ImobHub</h2>
+              <h2>Filtros exclusivos do imobHUB</h2>
               <p>
-                A distribuição de leads do ImobHub oferece filtros que você não encontra em 
+                A distribuição de leads do imobHUB oferece filtros que você não encontra em 
                 nenhum outro sistema:
               </p>
               <ul>
@@ -160,7 +160,7 @@ export default function WhatsAppImobiliarias() {
                 e veja seus resultados melhorarem.
               </p>
               <p>
-                Quer conhecer a distribuição de leads do ImobHub? 
+                Quer conhecer a distribuição de leads do imobHUB? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração</Link> e 
                 veja como funciona na prática.
               </p>

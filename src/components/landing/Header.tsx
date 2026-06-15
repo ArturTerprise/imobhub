@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-imobhub.png";
 
-const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o ImobHub.";
+const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o imobHUB.";
 const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
 const navItems = [

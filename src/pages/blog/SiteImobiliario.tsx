@@ -34,7 +34,7 @@ export default function SiteImobiliario() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <User className="w-4 h-4" />
-                  Equipe ImobHub
+                  Equipe imobHUB
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -162,9 +162,9 @@ export default function SiteImobiliario() {
                 Isso destrói credibilidade.
               </p>
 
-              <h2>Site integrado ao ImobHub</h2>
+              <h2>Site integrado ao imobHUB</h2>
               <p>
-                O ImobHub oferece um site imobiliário completamente integrado ao CRM:
+                O imobHUB oferece um site imobiliário completamente integrado ao CRM:
               </p>
               <ul>
                 <li><strong>Sincronização automática:</strong> Imóveis cadastrados no CRM aparecem no site instantaneamente</li>
@@ -183,7 +183,7 @@ export default function SiteImobiliario() {
               <p>
                 Quer um site integrado ao seu CRM? 
                 <Link to="https://calendly.com/artur-terprise/30min" target="_blank"> Agende uma demonstração</Link> e 
-                conheça o site imobiliário do ImobHub.
+                conheça o site imobiliário do imobHUB.
               </p>
             </motion.article>
           </div>

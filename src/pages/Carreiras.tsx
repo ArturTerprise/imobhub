@@ -66,7 +66,7 @@ export default function Carreiras() {
               <h1 className="heading-section mb-6">
                 Faça parte do
                 <br />
-                <span className="text-gradient">time ImobHub</span>
+                <span className="text-gradient">time imobHUB</span>
               </h1>
               <p className="text-body-large">
                 Estamos sempre em busca de talentos apaixonados por tecnologia 

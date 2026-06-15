@@ -49,7 +49,7 @@ export default function Sobre() {
                 <span className="text-gradient">imobiliário brasileiro</span>
               </h1>
               <p className="text-body-large">
-                Somos a Terprise Soluções Digitais, empresa especializada em 
+                Somos a Terprise Software House, empresa especializada em 
                 tecnologia para o mercado imobiliário. Nosso objetivo é simplificar 
                 a gestão de imobiliárias através de soluções inovadoras.
               </p>
@@ -69,7 +69,7 @@ export default function Sobre() {
               >
                 <h2 className="text-3xl font-bold mb-6">Nossa História</h2>
                 <p className="text-muted-foreground mb-4">
-                  O ImobHub nasceu da observação das dificuldades enfrentadas por 
+                  O imobHUB nasceu da observação das dificuldades enfrentadas por 
                   imobiliárias no dia a dia: sistemas fragmentados, processos manuais 
                   e falta de integração entre ferramentas.
                 </p>
