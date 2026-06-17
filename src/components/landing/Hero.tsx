@@ -60,8 +60,8 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-body-large max-w-2xl mx-auto mb-10"
           >
-            O ecossistema completo que une CRM, site, portal de vendas e automações 
-            em uma única plataforma. Simplifique para focar no que importa: fechar negócios.
+            O ecossistema completo que une CRM, site, portal de vendas, automações
+            e inteligência artificial em uma única plataforma. Simplifique para focar no que importa: fechar negócios.
           </motion.p>
 
           {/* CTA Buttons */}
