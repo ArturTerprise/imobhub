@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-imobhub.png";
@@ -10,6 +10,7 @@ const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
 const navItems = [
   { label: "Funcionalidades", href: "#features" },
+  { label: "IA", href: "#ia", highlight: true },
   { label: "Integrações", href: "#integrations" },
   { label: "Sobre", href: "/sobre" },
 ];
@@ -47,7 +48,16 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              item.href.startsWith("#") ? (
+              item.highlight ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700 transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {item.label}
+                </a>
+              ) : item.href.startsWith("#") ? (
                 <a
                   key={item.href}
                   href={item.href}
@@ -106,7 +116,17 @@ export function Header() {
           >
             <div className="container-custom py-6 flex flex-col gap-4">
               {navItems.map((item) => (
-                item.href.startsWith("#") ? (
+                item.highlight ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="inline-flex items-center gap-1.5 text-lg py-2 font-semibold text-violet-600"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    {item.label}
+                  </a>
+                ) : item.href.startsWith("#") ? (
                   <a
                     key={item.href}
                     href={item.href}

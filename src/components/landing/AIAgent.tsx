@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   UserPlus,
   Search,
@@ -24,6 +24,9 @@ import {
   Sparkles,
   Bot,
   Zap,
+  User,
+  Users,
+  ArrowDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -127,13 +130,42 @@ const agentFeatures = [
   },
 ];
 
-const chatExamples = [
-  { from: "user", text: "Cria um lead: João Silva, (62) 99999-8888, interessado no Apto 302" },
-  { from: "bot", text: "✅ Lead criado e atribuído a você. João Silva está em Novo contato. Quer já criar uma atividade de boas-vindas?" },
-  { from: "user", text: "Meus leads com visita agendada pra hoje" },
-  { from: "bot", text: "📋 Você tem 3 visitas hoje:\n• 10h — Carlos Mendes (Apto 201)\n• 14h — Ana Souza (Casa 47)\n• 16h30 — Pedro Lima (Garden 03)" },
-  { from: "user", text: "Visita com Carlos realizada, ele gostou mas vai pensar. Agenda follow-up pra quinta" },
-  { from: "bot", text: "📝 Nota registrada em Carlos Mendes. ✅ Follow-up agendado: quinta-feira, 08h." },
+const personas = [
+  {
+    key: "corretor",
+    label: "Corretor",
+    icon: User,
+    chat: [
+      { from: "user", text: "Cria um lead: João Silva, (62) 99999-8888, interessado no Apto 302" },
+      { from: "bot", text: "✅ Lead criado e atribuído a você. João Silva está em Novo contato. Quer já criar uma atividade de boas-vindas?" },
+      { from: "user", text: "Meus leads com visita agendada pra hoje" },
+      { from: "bot", text: "📋 Você tem 3 visitas hoje:\n• 10h — Carlos Mendes (Apto 201)\n• 14h — Ana Souza (Casa 47)\n• 16h30 — Pedro Lima (Garden 03)" },
+      { from: "user", text: "Visita com Carlos realizada, ele gostou mas vai pensar. Agenda follow-up pra quinta" },
+      { from: "bot", text: "📝 Nota registrada em Carlos Mendes. ✅ Follow-up agendado: quinta-feira, 08h." },
+    ],
+  },
+  {
+    key: "gerente",
+    label: "Gerente",
+    icon: Users,
+    chat: [
+      { from: "user", text: "Como está a equipe esse mês?" },
+      { from: "bot", text: "📊 Equipe em junho:\n• 142 leads recebidos\n• Conversão 18% (+3 p.p. vs maio)\n• Top: Marina — 9 vendas" },
+      { from: "user", text: "Com qual corretor devo me preocupar?" },
+      { from: "bot", text: "⚠️ Rafael Lima: 0 follow-ups em 5 dias e 7 leads parados em \"Novo contato\". Quer que eu redistribua os leads frios dele?" },
+    ],
+  },
+  {
+    key: "diretor",
+    label: "Diretor",
+    icon: Building,
+    chat: [
+      { from: "user", text: "Resumo da imobiliária no mês" },
+      { from: "bot", text: "🏢 Junho:\n• VGV R$ 4,2 mi (+12% vs maio)\n• 31 vendas · 480 leads\n• Ticket médio R$ 135 mil" },
+      { from: "user", text: "De onde vieram os leads?" },
+      { from: "bot", text: "📈 Origem dos leads:\n• Meta Ads 38%\n• Portais 29%\n• Site próprio 21%\n• Indicação 12%" },
+    ],
+  },
 ];
 
 export function AIAgent() {
@@ -141,6 +173,8 @@ export function AIAgent() {
   const chatRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const chatInView = useInView(chatRef, { once: true, margin: "-100px" });
+  const [persona, setPersona] = useState(0);
+  const active = personas[persona];
 
   return (
     <section
@@ -188,6 +222,26 @@ export function AIAgent() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
+              {/* Tabs de persona — quem fala com o agente */}
+              <div className="flex justify-center mb-6">
+                <div className="inline-flex rounded-full border border-border/60 bg-card p-1 gap-1">
+                  {personas.map((p, i) => (
+                    <button
+                      key={p.key}
+                      onClick={() => setPersona(i)}
+                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                        persona === i
+                          ? "bg-accent text-white shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <p.icon className="w-3.5 h-3.5" />
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Phone frame */}
               <div className="relative mx-auto max-w-sm">
                 {/* Glow behind phone */}
@@ -210,12 +264,12 @@ export function AIAgent() {
 
                   {/* Chat messages */}
                   <div className="bg-[#ECE5DD] dark:bg-secondary/40 p-4 space-y-3 min-h-[380px]">
-                    {chatExamples.map((msg, i) => (
+                    {active.chat.map((msg, i) => (
                       <motion.div
-                        key={i}
+                        key={`${persona}-${i}`}
                         initial={{ opacity: 0, y: 10 }}
-                        animate={chatInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.4, delay: 0.3 + i * 0.15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.15 + i * 0.12 }}
                         className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
                       >
                         <div
@@ -242,6 +296,30 @@ export function AIAgent() {
                   </div>
                 </div>
               </div>
+
+              {/* Reforço da automação: o follow-up já caiu no Google Calendar */}
+              {active.key === "corretor" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={chatInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 1.3 }}
+                  className="mx-auto max-w-sm"
+                >
+                  <div className="flex justify-center py-2 text-accent">
+                    <ArrowDown className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/5 p-3">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center text-accent">
+                      <CalendarClock className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      O follow-up de quinta já entrou no{" "}
+                      <strong className="text-foreground">Google Calendar</strong> do corretor —
+                      sincronização automática, sem digitar nada.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
 
             {/* Highlights list */}
@@ -296,7 +374,7 @@ export function AIAgent() {
               <div className="pt-4">
                 <Button className="btn-accent rounded-full px-6" asChild>
                   <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
-                    Ver demonstração do agente
+                    Agendar demonstração
                   </a>
                 </Button>
               </div>
