@@ -297,7 +297,7 @@ export function AIAgent() {
                 </div>
               </div>
 
-              {/* Reforço da automação: o follow-up já caiu no Google Calendar */}
+              {/* Reforço da automação: o follow-up já caiu no Google Agenda */}
               {active.key === "corretor" && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
@@ -314,7 +314,7 @@ export function AIAgent() {
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
                       O follow-up de quinta já entrou no{" "}
-                      <strong className="text-foreground">Google Calendar</strong> do corretor —
+                      <strong className="text-foreground">Google Agenda</strong> do corretor —
                       sincronização automática, sem digitar nada.
                     </p>
                   </div>

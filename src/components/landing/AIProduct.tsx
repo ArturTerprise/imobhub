@@ -47,7 +47,7 @@ const loop = [
   {
     icon: CalendarClock,
     n: "03",
-    title: "Cai no Google Calendar",
+    title: "Cai no Google Agenda",
     desc: "A tarefa sincroniza na agenda do corretor automaticamente — zero digitação.",
   },
   {
