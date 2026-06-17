@@ -18,6 +18,10 @@ import {
   CalendarClock,
   RefreshCw,
   BrainCircuit,
+  LayoutDashboard,
+  Briefcase,
+  Boxes,
+  BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -60,16 +64,17 @@ const loop = [
   },
 ];
 
-// Posições dos nós sobre o traçado serpenteado (viewBox 1000 × 340).
+// Posições dos nós sobre o traçado serpenteado (viewBox 1000 × 440).
+const VB_H = 440;
 const NODES = [
-  { x: 110, y: 110 },
-  { x: 305, y: 238 },
-  { x: 500, y: 110 },
-  { x: 695, y: 238 },
-  { x: 890, y: 118 },
+  { x: 110, y: 150 },
+  { x: 305, y: 290 },
+  { x: 500, y: 150 },
+  { x: 695, y: 290 },
+  { x: 890, y: 158 },
 ];
 const LOOP_PATH =
-  "M 110 110 C 200 110, 215 238, 305 238 C 395 238, 410 110, 500 110 C 590 110, 605 238, 695 238 C 785 238, 805 118, 890 118";
+  "M 110 150 C 200 150, 215 290, 305 290 C 395 290, 410 150, 500 150 C 590 150, 605 290, 695 290 C 785 290, 805 158, 890 158";
 
 // ——— Mockups de cada função (janela do produto) ———
 
@@ -115,22 +120,38 @@ function MockAutofill() {
 }
 
 function MockDescricao() {
+  // O inverso do autofill: a partir dos campos já cadastrados, a IA escreve.
+  const campos = [
+    ["Tipo", "Apartamento"],
+    ["Dormitórios", "3 (1 suíte)"],
+    ["Área privativa", "87 m²"],
+    ["Bairro", "Setor Bueno"],
+    ["Vagas", "2"],
+    ["Valor", "R$ 650.000"],
+  ];
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className={`${mono} text-[10px] tracking-wide text-slate-400`}>IMÓVEL #1042</p>
-          <p className="text-xs font-semibold text-slate-800">Apto Setor Bueno · 87 m²</p>
-        </div>
-        <span className="inline-flex items-center gap-1 rounded-md bg-violet-600 px-2.5 py-1.5 text-[11px] font-semibold text-white">
-          <Sparkles className="w-3 h-3" /> Gerar descrição
-        </span>
+      <p className={`${mono} text-[10px] tracking-wide text-slate-400`}>IMÓVEL #1042 · DADOS DO CADASTRO</p>
+      <div className="grid grid-cols-2 gap-2">
+        {campos.map(([label, value]) => (
+          <div key={label} className="rounded-md border border-slate-200 bg-white px-2.5 py-1.5">
+            <p className={`${mono} text-[9px] uppercase tracking-wide text-slate-400`}>{label}</p>
+            <p className="text-xs font-medium text-slate-800">{value}</p>
+          </div>
+        ))}
+      </div>
+      <button className="w-full inline-flex items-center justify-center gap-1.5 rounded-md bg-violet-600 px-3 py-2 text-[11px] font-semibold text-white">
+        <Sparkles className="w-3 h-3" /> Gerar descrição com IA
+      </button>
+      <div className={`${mono} flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-violet-600`}>
+        <CornerDownRight className="w-3.5 h-3.5" />
+        Texto gerado a partir dos campos
       </div>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="rounded-lg border border-slate-200 bg-white p-3 text-[11px] leading-relaxed text-slate-600 space-y-2"
+        className="rounded-lg border border-violet-200 bg-violet-50/40 p-3 text-[11px] leading-relaxed text-slate-600 space-y-2"
       >
         <p>
           Apartamento de alto padrão no coração do Setor Bueno, com 87 m² de
@@ -301,6 +322,7 @@ const aiFeatures = [
     tag: "NO CADASTRO DO IMÓVEL",
     desc: "Cole a descrição de um imóvel — de um portal, de um WhatsApp, de qualquer lugar — e a IA extrai e preenche os campos para você só conferir.",
     window: "novo-imovel / importar",
+    nav: "estoque",
     mock: MockAutofill,
   },
   {
@@ -309,6 +331,7 @@ const aiFeatures = [
     tag: "NA FICHA DO IMÓVEL",
     desc: "Com o imóvel cadastrado, um clique gera um texto de venda no padrão dos grandes portais — sem clichê, sem emoji, pronto para publicar.",
     window: "imovel-1042 / descricao",
+    nav: "estoque",
     mock: MockDescricao,
   },
   {
@@ -317,6 +340,7 @@ const aiFeatures = [
     tag: "NO CRM",
     desc: "A IA lê todo o histórico e devolve um resumo curto com as próximas ações recomendadas. O corretor entra na conversa sabendo onde parou.",
     window: "lead / carlos-mendes",
+    nav: "negocios",
     mock: MockResumo,
   },
   {
@@ -325,6 +349,7 @@ const aiFeatures = [
     tag: "NO CRM",
     desc: "A IA cruza o perfil e o interesse do cliente e ranqueia os imóveis disponíveis mais aderentes, explicando o porquê de cada indicação.",
     window: "match / lead-ana-souza",
+    nav: "negocios",
     mock: MockMatch,
   },
   {
@@ -333,8 +358,18 @@ const aiFeatures = [
     tag: "NA DOCUMENTAÇÃO",
     desc: "Além de emitir as certidões automaticamente, a IA lê o conteúdo e aponta riscos e pendências em segundos.",
     window: "documentacao / proponente",
+    nav: "certidoes",
     mock: MockCertidoes,
   },
+];
+
+// Barra lateral que reproduz a navegação do imobHUB.
+const RAIL = [
+  { key: "dashboard", icon: LayoutDashboard },
+  { key: "negocios", icon: Briefcase },
+  { key: "estoque", icon: Boxes },
+  { key: "certidoes", icon: ShieldCheck },
+  { key: "relatorios", icon: BarChart3 },
 ];
 
 export function AIProduct() {
@@ -414,8 +449,8 @@ export function AIProduct() {
           </h3>
 
           {/* Desktop: traçado serpenteado com nós ancorados */}
-          <div className="relative hidden lg:block" style={{ aspectRatio: "1000 / 340" }}>
-            <svg viewBox="0 0 1000 340" className="absolute inset-0 w-full h-full">
+          <div className="relative hidden lg:block" style={{ aspectRatio: `1000 / ${VB_H}` }}>
+            <svg viewBox={`0 0 1000 ${VB_H}`} className="absolute inset-0 w-full h-full">
               <defs>
                 <linearGradient id="loopGrad" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.2" />
@@ -450,7 +485,7 @@ export function AIProduct() {
             {/* Cards ancorados aos nós */}
             {loop.map((item, i) => {
               const node = NODES[i];
-              const isTop = node.y < 170;
+              const isTop = node.y < 220;
               return (
                 <motion.div
                   key={item.n}
@@ -460,8 +495,8 @@ export function AIProduct() {
                   className="absolute w-[19%]"
                   style={{
                     left: `${(node.x / 1000) * 100}%`,
-                    top: isTop ? "auto" : `${((node.y + 30) / 340) * 100}%`,
-                    bottom: isTop ? `${((340 - (node.y - 30)) / 340) * 100}%` : "auto",
+                    top: isTop ? "auto" : `${((node.y + 32) / VB_H) * 100}%`,
+                    bottom: isTop ? `${((VB_H - (node.y - 32)) / VB_H) * 100}%` : "auto",
                     transform: "translateX(-50%)",
                   }}
                 >
@@ -507,7 +542,7 @@ export function AIProduct() {
             initial={{ opacity: 0, y: 16 }}
             animate={loopInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.7, duration: 0.6 }}
-            className="mt-10 lg:mt-6 flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-gradient-to-r from-violet-600/15 via-violet-600/5 to-transparent p-6"
+            className="mt-10 lg:mt-12 flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-gradient-to-r from-violet-600/15 via-violet-600/5 to-transparent p-6"
           >
             <span className={`${display} text-3xl font-extrabold text-violet-400 leading-none`}>=</span>
             <p className="text-base md:text-lg text-white/80 leading-relaxed">
@@ -599,19 +634,37 @@ export function AIProduct() {
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" /> IA
                 </span>
               </div>
-              {/* Content */}
-              <div className="p-5 min-h-[340px]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <Mock />
-                  </motion.div>
-                </AnimatePresence>
+              {/* App shell: barra lateral imobHUB + conteúdo */}
+              <div className="flex">
+                <aside className="hidden sm:flex w-12 flex-col items-center gap-1 border-r border-slate-200 bg-slate-50/70 py-3">
+                  <div className="mb-2 flex h-6 w-6 items-center justify-center rounded-md bg-slate-900 text-[11px] font-bold text-white">i</div>
+                  {RAIL.map((item) => {
+                    const on = aiFeatures[active].nav === item.key;
+                    return (
+                      <div
+                        key={item.key}
+                        className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
+                          on ? "bg-violet-100 text-violet-600" : "text-slate-300"
+                        }`}
+                      >
+                        <item.icon className="w-4 h-4" />
+                      </div>
+                    );
+                  })}
+                </aside>
+                <div className="flex-1 p-5 min-h-[340px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={active}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <Mock />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -667,7 +720,7 @@ export function AIProduct() {
             asChild
           >
             <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
-              Ver a IA na prática
+              Agendar Demo
             </a>
           </Button>
         </motion.div>

@@ -56,7 +56,7 @@ const integrationCategories = [
     icon: CreditCard,
     integrations: [
       { name: "Imobitech", logo: imobitech, comingSoon: false },
-      { name: "CUB", logo: cub, comingSoon: true },
+      { name: "CUB", logo: cub, comingSoon: false },
     ],
   },
 ];
