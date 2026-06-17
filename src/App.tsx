@@ -12,6 +12,7 @@ import Contato from "./pages/Contato";
 import Termos from "./pages/Termos";
 import Privacidade from "./pages/Privacidade";
 import NotFound from "./pages/NotFound";
+import DemoIA from "./pages/DemoIA";
 
 // Blog posts
 import CrmImobiliario from "./pages/blog/CrmImobiliario";
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/contato" element={<Contato />} />
           <Route path="/termos" element={<Termos />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/demo-ia" element={<DemoIA />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

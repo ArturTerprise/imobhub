@@ -132,11 +132,11 @@ export function Integrations() {
                           Em breve
                         </span>
                       )}
-                      <div className={`bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border flex items-center justify-center min-h-[100px] ${integration.comingSoon ? "border-accent/30 opacity-80" : "border-border/50 hover:border-accent/30"}`}>
+                      <div className={`bg-white rounded-2xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 border flex items-center justify-center min-h-[100px] ${integration.comingSoon ? "border-accent/30 opacity-80" : "border-border/50 hover:border-accent/30"}`}>
                         <img
                           src={integration.logo}
                           alt={integration.name}
-                          className={`max-h-16 w-auto max-w-full object-contain transition-all duration-300 ${integration.comingSoon ? "grayscale-0" : "grayscale group-hover:grayscale-0"}`}
+                          className={`max-h-20 w-auto max-w-full object-contain transition-all duration-300 ${integration.comingSoon ? "grayscale-0" : "grayscale group-hover:grayscale-0"}`}
                         />
                       </div>
                       <p className="text-center text-sm text-muted-foreground mt-2 font-medium">

@@ -67,14 +67,14 @@ const loop = [
 // Posições dos nós sobre o traçado serpenteado (viewBox 1000 × 440).
 const VB_H = 440;
 const NODES = [
-  { x: 110, y: 150 },
-  { x: 305, y: 290 },
+  { x: 30, y: 150 },
+  { x: 265, y: 290 },
   { x: 500, y: 150 },
-  { x: 695, y: 290 },
-  { x: 890, y: 158 },
+  { x: 735, y: 290 },
+  { x: 970, y: 158 },
 ];
 const LOOP_PATH =
-  "M 110 150 C 200 150, 215 290, 305 290 C 395 290, 410 150, 500 150 C 590 150, 605 290, 695 290 C 785 290, 805 158, 890 158";
+  "M 30 150 C 130 150, 165 290, 265 290 C 365 290, 400 150, 500 150 C 600 150, 635 290, 735 290 C 835 290, 870 158, 970 158";
 
 // ——— Mockups de cada função (janela do produto) ———
 
@@ -486,6 +486,15 @@ export function AIProduct() {
             {loop.map((item, i) => {
               const node = NODES[i];
               const isTop = node.y < 220;
+              const isFirst = i === 0;
+              const isLast = i === NODES.length - 1;
+              // Cards das pontas ancoram na borda (alinham com logo / botão);
+              // os do meio centralizam no nó.
+              const horiz = isFirst
+                ? { left: "0%", transform: "translateX(0)" }
+                : isLast
+                ? { right: "0%", transform: "translateX(0)" }
+                : { left: `${(node.x / 1000) * 100}%`, transform: "translateX(-50%)" };
               return (
                 <motion.div
                   key={item.n}
@@ -494,10 +503,9 @@ export function AIProduct() {
                   transition={{ delay: 0.4 + i * 0.28, duration: 0.5 }}
                   className="absolute w-[19%]"
                   style={{
-                    left: `${(node.x / 1000) * 100}%`,
+                    ...horiz,
                     top: isTop ? "auto" : `${((node.y + 32) / VB_H) * 100}%`,
                     bottom: isTop ? `${((VB_H - (node.y - 32)) / VB_H) * 100}%` : "auto",
-                    transform: "translateX(-50%)",
                   }}
                 >
                   <div className="rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-4">
@@ -513,28 +521,53 @@ export function AIProduct() {
             })}
           </div>
 
-          {/* Mobile: timeline vertical */}
-          <div className="lg:hidden space-y-3">
-            {loop.map((item, i) => (
-              <motion.div
-                key={item.n}
-                initial={{ opacity: 0, x: -10 }}
-                animate={loopInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.1 }}
-                className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4"
-              >
-                <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-lg bg-violet-500/15 text-violet-300">
-                  <item.icon className="w-4 h-4" />
-                </div>
-                <div>
+          {/* Mobile: spine serpenteado vertical + cards (S sem atrapalhar a leitura) */}
+          <div className="lg:hidden relative">
+            <svg
+              className="absolute left-0 top-0 h-full w-12 pointer-events-none"
+              viewBox="0 0 48 1000"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="loopGradV" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.2" />
+                  <stop offset="50%" stopColor="#a78bfa" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.2" />
+                </linearGradient>
+              </defs>
+              <motion.path
+                d="M 24 100 C 44 150, 44 250, 24 300 C 4 350, 4 450, 24 500 C 44 550, 44 650, 24 700 C 4 750, 4 850, 24 900"
+                fill="none"
+                stroke="url(#loopGradV)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+                initial={{ pathLength: 0 }}
+                animate={loopInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1.4, ease: "easeInOut" }}
+              />
+            </svg>
+            <div className="space-y-4">
+              {loop.map((item, i) => (
+                <motion.div
+                  key={item.n}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={loopInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.2 + i * 0.12 }}
+                  className="relative ml-16 rounded-xl border border-white/10 bg-white/[0.04] p-4"
+                >
+                  <span className="absolute -left-[54px] top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-violet-400 bg-[#0a0911] text-violet-300">
+                    <item.icon className="w-3.5 h-3.5" />
+                  </span>
                   <p className="text-sm font-semibold text-white">
                     <span className={`${mono} text-[10px] text-violet-300/60 mr-2`}>{item.n}</span>
                     {item.title}
                   </p>
                   <p className="text-[11px] leading-relaxed text-white/50 mt-1">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Resultado do loop */}

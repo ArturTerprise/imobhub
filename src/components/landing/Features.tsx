@@ -12,6 +12,7 @@ import {
   FileCheck,
   Share2,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 const mainFeatures = [
@@ -44,13 +45,20 @@ const mainFeatures = [
   },
 ];
 
-const additionalFeatures = [
+const additionalFeatures: {
+  icon: typeof Sparkles;
+  title: string;
+  description: string;
+  isNew: boolean;
+  href?: string;
+}[] = [
   {
     icon: Sparkles,
-    title: "Agente IA no WhatsApp",
+    title: "A IA chegou no imobHUB",
     description:
-      "O corretor gerencia leads, agenda visitas e gera PDFs diretamente pelo WhatsApp, sem abrir o sistema.",
+      "Descrição de anúncios, resumo de leads, match imóvel-cliente, análise de certidões e o agente no WhatsApp. São várias funções de IA nativas.",
     isNew: true,
+    href: "#ia",
   },
   {
     icon: MessageCircle,
@@ -159,34 +167,44 @@ export function Features() {
 
           {/* Additional Features Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {additionalFeatures.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 + 0.05 * index }}
-                className={`flex items-start gap-4 p-6 rounded-xl bg-card border transition-colors relative ${
-                  feature.isNew
-                    ? "border-accent/40 hover:border-accent/60 shadow-sm shadow-accent/10"
-                    : "border-border/50 hover:border-accent/30"
-                }`}
-              >
-                {feature.isNew && (
-                  <span className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-accent text-white">
-                    Novo
-                  </span>
-                )}
-                <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${feature.isNew ? "bg-accent/15 text-accent" : "bg-accent/10 text-accent"}`}>
-                  <feature.icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-1">{feature.title}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            {additionalFeatures.map((feature, index) => {
+              const Card = feature.href ? motion.a : motion.div;
+              return (
+                <Card
+                  key={index}
+                  {...(feature.href ? { href: feature.href } : {})}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + 0.05 * index }}
+                  className={`group flex items-start gap-4 p-6 rounded-xl bg-card border transition-colors relative ${
+                    feature.isNew
+                      ? "border-accent/40 hover:border-accent/60 shadow-sm shadow-accent/10"
+                      : "border-border/50 hover:border-accent/30"
+                  } ${feature.href ? "cursor-pointer" : ""}`}
+                >
+                  {feature.isNew && (
+                    <span className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-accent text-white">
+                      Novo
+                    </span>
+                  )}
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${feature.isNew ? "bg-accent/15 text-accent" : "bg-accent/10 text-accent"}`}>
+                    <feature.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">{feature.title}</h4>
+                    <p className="text-sm text-muted-foreground">
+                      {feature.description}
+                    </p>
+                    {feature.href && (
+                      <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-accent">
+                        Ver as funções de IA
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>
