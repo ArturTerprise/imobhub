@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArcadeEmbed } from "./ArcadeEmbed";
+import { trackViewDemo } from "@/lib/analytics";
 
 // Client logos
 import cidadeviva from "@/assets/clients/cidadeviva.png";
@@ -80,7 +81,10 @@ export function Hero() {
             <Button
               variant="ghost"
               className="text-base px-8 py-6 h-auto rounded-full gap-2 group"
-              onClick={() => setShowDemo(true)}
+              onClick={() => {
+                trackViewDemo("hero");
+                setShowDemo(true);
+              }}
             >
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <Play className="w-4 h-4 fill-current" />

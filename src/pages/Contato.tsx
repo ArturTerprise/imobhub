@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { trackContactForm } from "@/lib/analytics";
 
 const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de falar com a equipe imobHUB.";
 
@@ -57,6 +58,7 @@ export default function Contato() {
     const mailtoLink = `mailto:contato@terprise.com.br?subject=${formData.subject || "Contato via site"}&body=Nome: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ATelefone: ${formData.phone}%0D%0AEmpresa: ${formData.company}%0D%0A%0D%0AMensagem:%0D%0A${formData.message}`;
     
     window.open(mailtoLink, "_blank");
+    trackContactForm();
 
     toast({
       title: "Redirecionando para seu email!",
