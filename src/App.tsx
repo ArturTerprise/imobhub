@@ -9,8 +9,6 @@ import Blog from "./pages/Blog";
 import Carreiras from "./pages/Carreiras";
 import Ajuda from "./pages/Ajuda";
 import Contato from "./pages/Contato";
-import Termos from "./pages/Termos";
-import Privacidade from "./pages/Privacidade";
 import NotFound from "./pages/NotFound";
 
 // Blog posts
@@ -42,8 +40,9 @@ const App = () => (
           <Route path="/carreiras" element={<Carreiras />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/contato" element={<Contato />} />
-          <Route path="/termos" element={<Termos />} />
-          <Route path="/privacidade" element={<Privacidade />} />
+          {/* /termos e /privacidade são páginas estáticas servidas pelo nginx
+              (fonte única do documento legal, em git/legal/). NÃO declarar rota
+              SPA aqui — senão o React Router renderiza uma versão divergente. */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

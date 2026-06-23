@@ -113,12 +113,14 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    to={link.href}
+                  {/* Navegação real (não SPA): /termos e /privacidade são páginas
+                      estáticas servidas pelo nginx — fonte única do documento legal. */}
+                  <a
+                    href={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
