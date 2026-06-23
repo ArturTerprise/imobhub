@@ -125,8 +125,44 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Integração Google */}
+        <div className="pt-8 border-t border-primary-foreground/10">
+          <h4 className="font-semibold mb-3 text-sm uppercase tracking-wider text-primary-foreground/80">
+            Integração com o Google Agenda
+          </h4>
+          <p className="text-sm text-primary-foreground/60 max-w-4xl leading-relaxed">
+            O imobHUB é uma plataforma de gestão imobiliária (CRM, site, portal de vendas e
+            automações) para imobiliárias e corretores. Oferecemos uma integração{" "}
+            <span className="text-primary-foreground/80">opcional</span> com o Google Agenda:
+            ao conectar sua conta Google, o app{" "}
+            <span className="text-primary-foreground/80">imobhub-google-integrations</span>{" "}
+            sincroniza os agendamentos feitos no imobHUB — visitas a imóveis, reuniões e
+            follow-ups — criando, atualizando e removendo os eventos correspondentes no seu
+            Google Agenda. Usamos o escopo{" "}
+            <span className="text-primary-foreground/80">.../auth/calendar.events</span>{" "}
+            apenas para gerenciar esses eventos e o escopo{" "}
+            <span className="text-primary-foreground/80">.../auth/userinfo.email</span>{" "}
+            apenas para identificar a conta Google conectada. A conexão é opt-in e pode ser
+            revogada a qualquer momento. O uso e a transferência de dados recebidos das Google
+            APIs seguem a nossa{" "}
+            <Link to="/privacidade" className="underline hover:text-primary-foreground">
+              Política de Privacidade
+            </Link>{" "}
+            e a{" "}
+            <a
+              href="https://developers.google.com/terms/api-services-user-data-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary-foreground"
+            >
+              Google API Services User Data Policy
+            </a>
+            , incluindo os requisitos de Uso Limitado.
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/60">
             © {new Date().getFullYear()} imobHUB. Todos os direitos reservados.
           </p>
