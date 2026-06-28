@@ -4,56 +4,58 @@ import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLeadForm } from "./LeadForm";
 
+const MIN_USERS = "A partir de 5 usuários";
+
 const plans = [
   {
     name: "Plano Inicial",
-    audience: "Para imobiliárias enxutas",
-    price: "1.000",
-    unit: "/mês",
-    users: "1 a 5 usuários",
-    userRange: "1 a 5 usuários",
+    audience: "O essencial pra captar e vender",
+    price: "125",
+    unit: "/usuário/mês",
+    minUsers: MIN_USERS,
     source: "pricing_inicial",
     highlight: false,
     features: [
-      "Plataforma completa: CRM, site, portal de vendas e todos os módulos",
-      "IA nativa inclusa — uso por créditos",
-      "Integrações com portais, WhatsApp e assinadores digitais",
+      "CRM e funil de leads (kanban)",
+      "Site imobiliário (vitrine)",
+      "Estoque e catálogo de imóveis",
       "Distribuição automática de leads",
+      "Integrações com portais e WhatsApp",
       "Suporte por WhatsApp e e-mail",
     ],
   },
   {
     name: "Plano Crescimento",
-    audience: "Para equipes em expansão",
-    price: "3.000",
-    unit: "/mês",
-    users: "5 a 20 usuários",
-    userRange: "5 a 20 usuários",
+    audience: "A operação completa",
+    price: "160",
+    unit: "/usuário/mês",
+    minUsers: MIN_USERS,
     source: "pricing_crescimento",
     highlight: true,
     features: [
-      "Tudo da plataforma e da IA, sem limite de funções",
-      "Onboarding guiado de implantação",
-      "Treinamento da equipe",
-      "Suporte prioritário",
-      "Acompanhamento de resultados com a nossa equipe",
+      "Tudo do Plano Inicial",
+      "Portal de vendas completo: propostas, contratos e secretaria",
+      "Gestão de equipes, comissões e RH",
+      "Dashboards e relatórios avançados",
+      "IA nativa: anúncios, resumo de leads e match (uso por créditos)",
+      "Onboarding guiado e suporte prioritário",
     ],
   },
   {
     name: "Plano Escala",
-    audience: "Para grandes operações",
-    price: "100",
+    audience: "Tudo, com automações e serviço dedicado",
+    price: "200",
     unit: "/usuário/mês",
-    users: "Acima de 20 corretores",
-    userRange: "Mais de 50 usuários",
+    minUsers: MIN_USERS,
     source: "pricing_escala",
     highlight: false,
     features: [
       "Tudo do Plano Crescimento",
-      "Gerente de conta dedicado",
-      "Migração e implantação assistidas",
-      "Suporte prioritário no WhatsApp",
-      "Prioridade em novas funções e no roadmap",
+      "Agente de IA no WhatsApp + extensão Copiloto (uso por créditos)",
+      "Automação de certidões",
+      "Módulo de locação e operações",
+      "Verificação de CRECI em massa",
+      "Gerente de conta dedicado, migração assistida e prioridade no roadmap",
     ],
   },
 ];
@@ -83,9 +85,9 @@ export function Pricing() {
           </h2>
           <p className="text-body-large max-w-2xl mx-auto">
             Construímos o imobHUB com foco total em imobiliárias — revenda,
-            lançamento e locação. Todos os planos têm acesso à plataforma
-            completa e à IA nativa (uso por créditos); o que muda é o nível de
-            onboarding, suporte e prioridade.
+            lançamento e locação. Escolha o plano pela entrega que a sua operação
+            precisa. O preço é por usuário (mínimo de 5) e a IA nativa é cobrada
+            por créditos, conforme o uso.
           </p>
         </motion.div>
 
@@ -125,7 +127,9 @@ export function Pricing() {
                 </span>
                 <span className="text-muted-foreground">{plan.unit}</span>
               </div>
-              <p className="text-sm font-medium text-accent mb-6">{plan.users}</p>
+              <p className="text-sm font-medium text-accent mb-6">
+                {plan.minUsers}
+              </p>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
@@ -140,7 +144,6 @@ export function Pricing() {
                 onClick={() =>
                   open({
                     plan: plan.name,
-                    userRange: plan.userRange,
                     source: plan.source,
                   })
                 }
@@ -157,9 +160,9 @@ export function Pricing() {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-10">
-          Valores mensais, sem taxa de adesão escondida. A IA nativa é cobrada
-          por créditos, conforme o uso. Fale com a gente para uma proposta sob
-          medida para a sua imobiliária.
+          Valores por usuário/mês, contratação mínima de 5 usuários, sem taxa de
+          adesão escondida. A IA nativa é cobrada por créditos, conforme o uso.
+          Fale com a gente para uma proposta sob medida para a sua imobiliária.
         </p>
       </div>
     </section>
