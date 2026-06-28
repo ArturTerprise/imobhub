@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLeadForm } from "./LeadForm";
 import logo from "@/assets/logo-imobhub.png";
@@ -20,6 +20,8 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { open: openLeadForm } = useLeadForm();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +30,22 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  /**
+   * Navega para uma seção da home (#features, #planos, etc.) funcionando em
+   * qualquer página: se já estamos na home, rola suave; se estamos numa página
+   * interna (/sobre, /blog…), navega para a home com a âncora (o scroll é feito
+   * pelo Index ao ler o hash).
+   */
+  const goToSection = (hash: string) => {
+    const id = hash.replace(/^#/, "");
+    setIsMobileMenuOpen(false);
+    if (location.pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
 
   return (
     <motion.header
@@ -53,7 +71,11 @@ export function Header() {
               item.highlight ? (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={`/${item.href}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goToSection(item.href);
+                  }}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700 transition-colors"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
@@ -62,7 +84,11 @@ export function Header() {
               ) : item.href.startsWith("#") ? (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={`/${item.href}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goToSection(item.href);
+                  }}
                   className="nav-link text-sm"
                 >
                   {item.label}
@@ -98,7 +124,11 @@ export function Header() {
           {/* Mobile: botão IA fixo + menu */}
           <div className="md:hidden flex items-center gap-2">
             <a
-              href="#ia"
+              href="/#ia"
+              onClick={(e) => {
+                e.preventDefault();
+                goToSection("#ia");
+              }}
               className="inline-flex items-center gap-1 rounded-full border border-violet-300 bg-violet-50 px-3 py-1.5 text-sm font-semibold text-violet-600"
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -128,8 +158,11 @@ export function Header() {
                 item.highlight ? (
                   <a
                     key={item.href}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    href={`/${item.href}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goToSection(item.href);
+                    }}
                     className="inline-flex items-center gap-1.5 text-lg py-2 font-semibold text-violet-600"
                   >
                     <Sparkles className="w-4 h-4" />
@@ -138,8 +171,11 @@ export function Header() {
                 ) : item.href.startsWith("#") ? (
                   <a
                     key={item.href}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    href={`/${item.href}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goToSection(item.href);
+                    }}
                     className="nav-link text-lg py-2"
                   >
                     {item.label}
