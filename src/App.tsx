@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LeadFormProvider } from "@/components/landing/LeadForm";
 import Index from "./pages/Index";
 import Sobre from "./pages/Sobre";
 import Blog from "./pages/Blog";
@@ -27,6 +28,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+       <LeadFormProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/sobre" element={<Sobre />} />
@@ -46,6 +48,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+       </LeadFormProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -61,8 +61,10 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-body-large max-w-2xl mx-auto mb-10"
           >
-            O ecossistema completo que une CRM, site, portal de vendas, automações
-            e inteligência artificial em uma única plataforma. Simplifique para focar no que importa: fechar negócios.
+            Feito para imobiliárias: o ecossistema completo que une CRM, site, portal
+            de vendas, automações e inteligência artificial em uma única plataforma.
+            Pensado para ser o sistema imobiliário mais completo do Brasil — simples
+            para você focar no que importa: fechar negócios.
           </motion.p>
 
           {/* CTA Buttons */}

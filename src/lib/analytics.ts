@@ -55,6 +55,21 @@ export function trackViewDemo(source: string) {
 }
 
 /**
+ * Abertura do formulário de leads (clique no CTA "Fale Conosco" / "Tenho interesse").
+ * Mantém o sinal de topo de funil que o antigo link de WhatsApp emitia ao ser clicado.
+ */
+export function trackLeadFormOpen(source: string, plan?: string) {
+  fbqTrack("Contact", { method: "lead_form", source, plan });
+  gaEvent("lead_form_open", { source, plan });
+}
+
+/** Envio do formulário de leads (planos / "Fale Conosco" do header). */
+export function trackLeadForm(source: string, plan?: string) {
+  fbqTrack("Lead", { content_name: plan ?? "Formulario de leads", source });
+  gaEvent("generate_lead", { method: "lead_form", source, plan });
+}
+
+/**
  * Listener delegado: captura TODOS os links de conversão (Calendly e WhatsApp),
  * incluindo CTAs futuros, sem precisar instrumentar cada botão.
  * Como os links abrem em nova aba (target=_blank), a página não descarrega
