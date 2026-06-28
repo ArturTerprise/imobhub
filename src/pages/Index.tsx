@@ -54,8 +54,8 @@ const Index = () => {
         <Features />
         <AIProduct />
         <AIAgent />
-        <Integrations />
         <Extension />
+        <Integrations />
         <Stats />
         <Pricing />
         <CTA />
