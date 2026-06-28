@@ -15,11 +15,11 @@ const plans = [
     source: "pricing_inicial",
     highlight: false,
     features: [
-      "Plataforma completa (CRM, site e portal de vendas)",
-      "Funil de leads e distribuição automática",
-      "Até 5 usuários",
-      "Integrações com portais e WhatsApp",
-      "Suporte técnico de verdade",
+      "Plataforma completa: CRM, site, portal de vendas e todos os módulos",
+      "IA nativa inclusa — uso por créditos",
+      "Integrações com portais, WhatsApp e assinadores digitais",
+      "Distribuição automática de leads",
+      "Suporte por WhatsApp e e-mail",
     ],
   },
   {
@@ -32,12 +32,11 @@ const plans = [
     source: "pricing_crescimento",
     highlight: true,
     features: [
-      "Tudo do Plano Inicial",
-      "Até 20 usuários",
-      "IA nativa (descrição de anúncios, match e resumo de leads)",
-      "Agente de WhatsApp com IA",
-      "Gestão de equipes, comissões e RH",
-      "Dashboards e relatórios avançados",
+      "Tudo da plataforma e da IA, sem limite de funções",
+      "Onboarding guiado de implantação",
+      "Treinamento da equipe",
+      "Suporte prioritário",
+      "Acompanhamento de resultados com a nossa equipe",
     ],
   },
   {
@@ -51,10 +50,10 @@ const plans = [
     highlight: false,
     features: [
       "Tudo do Plano Crescimento",
-      "Usuários ilimitados (R$ 100 por usuário)",
-      "Onboarding e migração assistida",
       "Gerente de conta dedicado",
-      "Prioridade no suporte e em novas funções",
+      "Migração e implantação assistidas",
+      "Suporte prioritário no WhatsApp",
+      "Prioridade em novas funções e no roadmap",
     ],
   },
 ];
@@ -84,8 +83,9 @@ export function Pricing() {
           </h2>
           <p className="text-body-large max-w-2xl mx-auto">
             Construímos o imobHUB com foco total em imobiliárias — revenda,
-            lançamento e locação. Escolha o plano que acompanha o tamanho da sua
-            operação.
+            lançamento e locação. Todos os planos têm acesso à plataforma
+            completa e à IA nativa (uso por créditos); o que muda é o nível de
+            onboarding, suporte e prioridade.
           </p>
         </motion.div>
 
@@ -157,8 +157,9 @@ export function Pricing() {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-10">
-          Valores mensais. Sem taxa de adesão escondida. Fale com a gente para
-          uma proposta sob medida para a sua imobiliária.
+          Valores mensais, sem taxa de adesão escondida. A IA nativa é cobrada
+          por créditos, conforme o uso. Fale com a gente para uma proposta sob
+          medida para a sua imobiliária.
         </p>
       </div>
     </section>
