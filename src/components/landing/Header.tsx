@@ -3,21 +3,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLeadForm } from "./LeadForm";
 import logo from "@/assets/logo-imobhub.png";
 
-const WHATSAPP_LINK = "https://wa.me/5562994616268?text=Olá! Gostaria de saber mais sobre o imobHUB.";
 const CALENDLY_LINK = "https://calendly.com/artur-terprise/30min";
 
 const navItems = [
   { label: "Funcionalidades", href: "#features" },
   { label: "IA", href: "#ia", highlight: true },
   { label: "Integrações", href: "#integrations" },
+  { label: "Planos", href: "#planos" },
   { label: "Sobre", href: "/sobre" },
 ];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { open: openLeadForm } = useLeadForm();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,11 +84,9 @@ export function Header() {
             <Button
               variant="ghost"
               className="font-medium"
-              asChild
+              onClick={() => openLeadForm({ source: "header" })}
             >
-              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
-                Fale Conosco
-              </a>
+              Fale Conosco
             </Button>
             <Button className="btn-accent text-sm px-6 py-2 h-auto rounded-full" asChild>
               <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">
@@ -156,10 +156,15 @@ export function Header() {
                 )
               ))}
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="ghost" className="w-full justify-center" asChild>
-                  <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
-                    Fale Conosco
-                  </a>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-center"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openLeadForm({ source: "header_mobile" });
+                  }}
+                >
+                  Fale Conosco
                 </Button>
                 <Button className="btn-accent w-full justify-center rounded-full" asChild>
                   <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer">

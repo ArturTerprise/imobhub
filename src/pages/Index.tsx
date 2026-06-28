@@ -5,7 +5,9 @@ import { Features } from "@/components/landing/Features";
 import { AIProduct } from "@/components/landing/AIProduct";
 import { AIAgent } from "@/components/landing/AIAgent";
 import { Integrations } from "@/components/landing/Integrations";
+import { Extension } from "@/components/landing/Extension";
 import { Stats } from "@/components/landing/Stats";
+import { Pricing } from "@/components/landing/Pricing";
 import { CTA } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
 
@@ -20,7 +22,9 @@ const Index = () => {
         <AIProduct />
         <AIAgent />
         <Integrations />
+        <Extension />
         <Stats />
+        <Pricing />
         <CTA />
       </main>
       <Footer />
