@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArcadeEmbed } from "./ArcadeEmbed";
 import { trackViewDemo } from "@/lib/analytics";
 
 // Client logos
@@ -91,7 +90,7 @@ export function Hero() {
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <Play className="w-4 h-4 fill-current" />
               </div>
-              Ver como funciona
+              Ver como funciona em 60s
             </Button>
           </motion.div>
 
@@ -149,7 +148,16 @@ export function Hero() {
               <X className="w-5 h-5" />
             </button>
             <div className="p-4">
-              <ArcadeEmbed />
+              <div className="aspect-video w-full overflow-hidden rounded-xl bg-black">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/IesqtTmOY8E?autoplay=1&rel=0&playsinline=1"
+                  title="imobHUB — Gestão Imobiliária Completa"
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </motion.div>
         </div>
