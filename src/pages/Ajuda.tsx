@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
-import { Search, Book, MessageCircle, Video, FileText, HelpCircle } from "lucide-react";
+import { Search, Book, MessageCircle, Video, FileText, HelpCircle, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
@@ -70,6 +70,23 @@ const faqs = [
   {
     question: "Qual o prazo de resposta do suporte?",
     answer: "Nosso suporte é técnico de verdade – pessoas reais que entendem do mercado imobiliário. Respondemos rapidamente durante o horário comercial (seg-sex, 8h-18h).",
+  },
+];
+
+const guides = [
+  {
+    title: "Fases de Leads e Motivos de Perda",
+    description:
+      "Como montar o funil de atendimento (etapas do Kanban) e cadastrar os motivos de perda para medir onde você perde negócio.",
+    tag: "CRM & Leads",
+    file: "/guias/guia-fases-de-leads-e-motivos-de-perda.pdf",
+  },
+  {
+    title: "Integração com Portais: Canal Pro e Chaves na Mão",
+    description:
+      "Passo a passo para publicar imóveis e receber leads no Canal Pro (ZAP, Viva Real, OLX) e no Chaves na Mão — incluindo como escolher Destaque e Super Destaque.",
+    tag: "Integrações",
+    file: "/guias/guia-integracao-canal-pro-e-chaves-na-mao.pdf",
   },
 ];
 
@@ -158,6 +175,55 @@ export default function Ajuda() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Guias em PDF */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto mb-16"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold mb-2">Guias em PDF</h2>
+                <p className="text-muted-foreground">
+                  Materiais prontos para baixar, imprimir e compartilhar com sua equipe
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                {guides.map((guide, index) => (
+                  <motion.a
+                    key={guide.title}
+                    href={guide.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="group flex flex-col bg-card rounded-xl p-6 border border-border hover:border-accent/40 hover:shadow-lg transition-all"
+                  >
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-6 h-6 text-accent" />
+                      </div>
+                      <div>
+                        <span className="inline-block text-xs font-medium text-accent bg-accent/10 rounded-full px-3 py-1 mb-2">
+                          {guide.tag}
+                        </span>
+                        <h3 className="font-semibold text-lg leading-snug">{guide.title}</h3>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground flex-1">{guide.description}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent group-hover:gap-3 transition-all">
+                      <Download className="w-4 h-4" />
+                      Baixar PDF
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
 
             {/* FAQs */}
             <motion.div
