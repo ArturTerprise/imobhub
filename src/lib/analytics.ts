@@ -1,9 +1,10 @@
 /**
  * Camada única de analytics da landing.
- * Dispara eventos de conversão para o Meta Pixel (fbq) e o Google Analytics 4 (gtag),
- * sempre de forma segura (no-op se o script ainda não carregou / for bloqueado).
+ * Dispara eventos de conversão para o Meta Pixel (fbq), o Google Analytics 4 (gtag)
+ * e o OpenAI Ads (oaiq), sempre de forma segura (no-op se o script ainda não
+ * carregou / for bloqueado).
  *
- * Os scripts base (gtag.js, fbq, Clarity) são injetados no index.html.
+ * Os scripts base (gtag.js, fbq, oaiq, Clarity) são injetados no index.html.
  * Aqui ficam só os eventos de CONVERSÃO (clique em CTA, envio de formulário).
  */
 
@@ -11,8 +12,12 @@ declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
     gtag?: (...args: unknown[]) => void;
+    oaiq?: (...args: unknown[]) => void;
   }
 }
+
+/** Moeda das conversões — operação 100% Brasil. */
+const CURRENCY = "BRL";
 
 /** Dispara um evento padrão do Meta Pixel. */
 function fbqTrack(event: string, params?: Record<string, unknown>) {
@@ -28,12 +33,23 @@ function gaEvent(event: string, params?: Record<string, unknown>) {
   }
 }
 
+/**
+ * Dispara uma conversão do OpenAI Ads.
+ * `type: "customer_action"` é o tipo padrão dos eventos de conversão do oaiq.
+ */
+function oaiqMeasure(event: string, params?: Record<string, unknown>) {
+  if (typeof window !== "undefined" && typeof window.oaiq === "function") {
+    window.oaiq("measure", event, { type: "customer_action", ...params });
+  }
+}
+
 /** "Agendar Demo/Demonstração" (Calendly) — agendamento. */
 export function trackScheduleDemo(source: string) {
   fbqTrack("Schedule", { content_name: "Agendar Demo", source });
   fbqTrack("Lead", { content_name: "Agendar Demo", source });
   gaEvent("schedule_demo", { method: "calendly", source });
   gaEvent("generate_lead", { method: "calendly", source });
+  oaiqMeasure("appointment_scheduled");
 }
 
 /** "Fale Conosco" (WhatsApp). */
@@ -46,6 +62,7 @@ export function trackContactWhatsApp(source: string) {
 export function trackContactForm(source = "contact_page") {
   fbqTrack("Lead", { content_name: "Formulario de contato", source });
   gaEvent("generate_lead", { method: "form", source });
+  oaiqMeasure("registration_completed", { amount: 0, currency: CURRENCY });
 }
 
 /** Abertura do tour/demo interativo ("Ver como funciona"). */
@@ -67,6 +84,7 @@ export function trackLeadFormOpen(source: string, plan?: string) {
 export function trackLeadForm(source: string, plan?: string) {
   fbqTrack("Lead", { content_name: plan ?? "Formulario de leads", source });
   gaEvent("generate_lead", { method: "lead_form", source, plan });
+  oaiqMeasure("registration_completed", { amount: 0, currency: CURRENCY });
 }
 
 /**
