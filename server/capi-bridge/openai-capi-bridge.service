@@ -1,0 +1,30 @@
+[Unit]
+Description=Ponte de conversoes server-side da landing imobhub.app (OpenAI Ads CAPI)
+Documentation=https://github.com/ArturTerprise/imobhub/blob/main/server/capi-bridge/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Segredos ficam FORA do git, so na VPS, com permissao 600.
+EnvironmentFile=/etc/openai-capi-bridge.env
+ExecStart=/usr/bin/node /root/imobhub-lp-src/server/capi-bridge/server.js
+Restart=always
+RestartSec=5
+# Estado (agendamentos ja enviados) sobrevive a restart e a redeploy.
+StateDirectory=openai-capi-bridge
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=capi-bridge
+
+# Endurecimento: o servico so precisa de rede e do proprio diretorio de estado.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target
