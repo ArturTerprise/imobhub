@@ -97,7 +97,12 @@ export function trackContactWhatsApp(source: string) {
 export function trackContactForm(source = "contact_page") {
   fbqTrack("Lead", { content_name: "Formulario de contato", source });
   gaEvent("generate_lead", { method: "form", source });
-  sendServerConversion(CAPI_REGISTRATION, { source_url: pageUrl() });
+  // Sem conversão de OpenAI Ads aqui de propósito: esta página só faz
+  // window.open de um mailto, então o que aconteceu foi o cliente de e-mail
+  // ABRIR, não a mensagem ser enviada. Quem desiste, fecha o e-mail, tem popup
+  // bloqueado ou não tem cliente configurado contaria como conversão, e a
+  // campanha passaria a otimizar em cima de intenção. O sinal de topo de funil
+  // (Meta/GA4) continua, que é o que ele sempre foi.
 }
 
 /** Abertura do tour/demo interativo ("Ver como funciona"). */

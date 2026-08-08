@@ -81,6 +81,9 @@ const maskEmail = (email) => {
  */
 let state = { seenEvents: [] };
 
+/** Só vira true depois que o estado inicial foi semeado com sucesso. */
+let primed = false;
+
 function loadState() {
   try {
     state = JSON.parse(fs.readFileSync(STATE_FILE, "utf8"));
@@ -241,15 +244,55 @@ function readBody(req, limitBytes = 4096) {
   });
 }
 
-async function handleRegistration(req, res) {
+/**
+ * IP real do visitante.
+ *
+ * NÃO dá para usar o primeiro hop do X-Forwarded-For: o nginx ACRESCENTA ao
+ * que o cliente mandou (`$proxy_add_x_forwarded_for` = "$http_x_forwarded_for,
+ * $remote_addr"), então o primeiro elemento é escolhido por quem chama. Com
+ * isso dava para trocar de balde no rate limit a cada request e injetar
+ * conversão falsa sem teto.
+ *
+ * X-Real-IP é escrito pelo nosso nginx com `$remote_addr` (sobrescreve, o
+ * cliente não forja). O último hop do XFF é o mesmo valor, e serve de reserva.
+ */
+function clientIp(req) {
+  const real = String(req.headers["x-real-ip"] || "").trim();
+  if (real) return real;
+
+  const hops = String(req.headers["x-forwarded-for"] || "")
+    .split(",")
+    .map((h) => h.trim())
+    .filter(Boolean);
+  if (hops.length) return hops[hops.length - 1];
+
+  return req.socket?.remoteAddress || "";
+}
+
+/**
+ * Isto NÃO é autenticação — um atacante decidido forja Origin. Serve para
+ * barrar chamada solta e manter o endpoint restrito ao nosso próprio site; o
+ * teto de verdade é o rate limit, que agora usa um IP confiável.
+ *
+ * Antes bastava OMITIR o Origin para passar. Agora exige Origin correto, com
+ * o Referer como reserva para navegador que não mande Origin em POST
+ * same-origin.
+ */
+function origemPermitida(req) {
   const origin = req.headers.origin;
-  if (origin && origin !== ALLOWED_ORIGIN) {
+  if (origin) return origin === ALLOWED_ORIGIN;
+
+  const referer = String(req.headers.referer || "");
+  return referer === ALLOWED_ORIGIN || referer.startsWith(`${ALLOWED_ORIGIN}/`);
+}
+
+async function handleRegistration(req, res) {
+  if (!origemPermitida(req)) {
     res.writeHead(403).end();
     return;
   }
 
-  // Atrás do nginx, o IP real vem no X-Forwarded-For.
-  const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = clientIp(req);
   if (rateLimited(ip || "desconhecido")) {
     res.writeHead(429).end();
     return;
@@ -257,7 +300,12 @@ async function handleRegistration(req, res) {
 
   let payload = {};
   try {
-    payload = JSON.parse((await readBody(req)) || "{}");
+    const bruto = JSON.parse((await readBody(req)) || "{}");
+    // JSON.parse aceita `null`, `123`, `"x"` — nada disso é corpo válido, e
+    // `null` chegava a derrubar o processo no acesso a payload.event_id.
+    if (bruto && typeof bruto === "object" && !Array.isArray(bruto)) {
+      payload = bruto;
+    }
   } catch {
     res.writeHead(400).end();
     return;
@@ -324,7 +372,12 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === "POST" && url.pathname === "/capi/registration") {
-    await handleRegistration(req, res);
+    try {
+      await handleRegistration(req, res);
+    } catch (err) {
+      log("erro tratando registration:", err?.message || String(err));
+      if (!res.headersSent) res.writeHead(500).end();
+    }
     return;
   }
 
@@ -342,6 +395,46 @@ async function calendlyGet(url) {
   return res.json();
 }
 
+/** URL da listagem de agendamentos ativos na janela que interessa. */
+function urlDaListagem() {
+  const minStart = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+  const maxStart = new Date(Date.now() + 180 * 24 * 3600 * 1000).toISOString();
+  return (
+    "https://api.calendly.com/scheduled_events" +
+    `?user=${encodeURIComponent(CALENDLY_USER_URI)}` +
+    `&status=active&count=100&sort=start_time:asc` +
+    `&min_start_time=${encodeURIComponent(minStart)}` +
+    `&max_start_time=${encodeURIComponent(maxStart)}`
+  );
+}
+
+/**
+ * Percorre TODAS as páginas.
+ *
+ * Sem isto, com mais de 100 agendamentos ativos na janela só vinham os 100 com
+ * start_time mais próximo: uma demo marcada hoje para data distante ficava
+ * invisível e, quando enfim aparecia, já passava dos 6 dias e era descartada —
+ * conversão real perdida com um log que parecia rotina.
+ */
+async function calendlyListarTudo() {
+  const todos = [];
+  let url = urlDaListagem();
+  let paginas = 0;
+
+  while (url) {
+    if (paginas >= 20) {
+      log(`aviso: parei no teto de 20 páginas do Calendly com ${todos.length} agendamentos`);
+      break;
+    }
+    const { collection = [], pagination } = await calendlyGet(url);
+    todos.push(...collection);
+    url = pagination?.next_page || null;
+    paginas += 1;
+  }
+
+  return todos;
+}
+
 /**
  * Procura reservas novas e manda appointment_scheduled.
  *
@@ -352,17 +445,20 @@ async function calendlyGet(url) {
 async function pollCalendly() {
   if (!CALENDLY_PAT || !CALENDLY_USER_URI) return;
 
-  try {
-    const minStart = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
-    const maxStart = new Date(Date.now() + 180 * 24 * 3600 * 1000).toISOString();
-    const listUrl =
-      "https://api.calendly.com/scheduled_events" +
-      `?user=${encodeURIComponent(CALENDLY_USER_URI)}` +
-      `&status=active&count=100&sort=start_time:asc` +
-      `&min_start_time=${encodeURIComponent(minStart)}` +
-      `&max_start_time=${encodeURIComponent(maxStart)}`;
+  // Semear é pré-requisito, não enfeite: sem estado semeado o poller mandaria
+  // toda reserva pré-existente como conversão nova. Se a semeadura falhar,
+  // ADIA a rodada em vez de seguir com a lista vazia.
+  if (!primed) {
+    try {
+      await primeState();
+    } catch (err) {
+      log(`semeadura inicial falhou (${err.message}) — poll adiado para a próxima rodada`);
+      return;
+    }
+  }
 
-    const { collection = [] } = await calendlyGet(listUrl);
+  try {
+    const collection = await calendlyListarTudo();
     const seen = new Set(state.seenEvents);
     const novos = collection.filter((ev) => !seen.has(ev.uri));
 
@@ -388,9 +484,21 @@ async function pollCalendly() {
       const tracking = invitee?.tracking || {};
       // O site carimba o oppref em salesforce_uuid (campo livre de passagem do
       // Calendly), deixando os UTMs de verdade intactos para o relatório.
-      const oppref = tracking.salesforce_uuid || tracking.utm_content || "";
+      // Vem da query string do visitante, então é entrada não confiável: um
+      // valor gigante ou com lixo derrubaria o LOTE INTEIRO na CAPI.
+      const oppref = String(tracking.salesforce_uuid || tracking.utm_content || "")
+        .replace(/[^\w.:-]/g, "")
+        .slice(0, 200);
 
       const timestampMs = new Date(invitee?.created_at || ev.created_at).getTime();
+
+      // isTooOld(NaN) é false, então data ilegível passaria batido e levaria o
+      // lote junto com um timestamp_ms inválido.
+      if (!Number.isFinite(timestampMs)) {
+        descartados.push(ev.uri);
+        log(`reserva ${uuid} descartada: created_at ilegível`);
+        continue;
+      }
 
       if (isTooOld(timestampMs)) {
         // A CAPI recusaria (e derrubaria o lote junto). Marca como vista para
@@ -421,42 +529,71 @@ async function pollCalendly() {
 
     const resultado = await sendEvents(events);
 
-    if (resultado === "transitorio") {
-      // Só o que falhou por indisponibilidade volta na próxima rodada.
-      log("envio falhou por indisponibilidade — reservas seguem pendentes");
-      if (descartados.length) {
-        state.seenEvents.push(...descartados);
-        saveState();
-      }
+    // Em ensaio a OpenAI só VALIDA — nada foi registrado. Marcar como visto
+    // aqui apagaria de vez a reserva: ao desligar o DRY_RUN ela seria pulada e
+    // a conversão nunca chegaria. O canário tem que ser inócuo.
+    if (DRY_RUN) {
+      log(`[DRY-RUN] ${events.length} reserva(s) validada(s), NÃO marcadas como vistas`);
+      comitar(descartados);
       return;
     }
 
-    // 'ok' ou 'permanente': em nenhum dos dois casos repetir ajuda.
-    state.seenEvents.push(...events.map((e) => e.id), ...descartados);
-    saveState();
+    if (resultado === "transitorio") {
+      // Só o que falhou por indisponibilidade volta na próxima rodada.
+      log("envio falhou por indisponibilidade — reservas seguem pendentes");
+      comitar(descartados);
+      return;
+    }
+
+    if (resultado === "permanente" && events.length > 1) {
+      // A CAPI derruba o LOTE INTEIRO por causa de um evento ruim. Marcar todos
+      // como vistos perderia de vez as reservas boas que estavam junto — então
+      // reenvia uma a uma para isolar a culpada.
+      log(`lote de ${events.length} recusado — reenviando um a um para isolar o evento ruim`);
+      const resolvidos = [];
+      for (const evento of events) {
+        const r = await sendEvents([evento]);
+        if (r === "transitorio") continue; // volta na próxima rodada
+        if (r === "permanente") log(`reserva recusada individualmente: ${evento.id}`);
+        resolvidos.push(evento.id);
+      }
+      comitar([...resolvidos, ...descartados]);
+      return;
+    }
+
+    // 'ok', ou 'permanente' com um único evento: repetir não ajudaria.
+    comitar([...events.map((e) => e.id), ...descartados]);
   } catch (err) {
     log("erro no poll do Calendly:", err.message);
   }
+}
+
+/** Acrescenta URIs ao estado e persiste, se houver o que acrescentar. */
+function comitar(uris) {
+  if (!uris.length) return;
+  state.seenEvents.push(...uris);
+  saveState();
 }
 
 /**
  * Na PRIMEIRA execução, os agendamentos que já existem no Calendly são passado —
  * mandá-los para a OpenAI inventaria um monte de conversão retroativa. Então a
  * primeira rodada só marca tudo como visto, sem enviar nada.
+ *
+ * Lança se o Calendly não responder: quem chama TEM que adiar o poll, não
+ * seguir com a lista vazia.
  */
 async function primeState() {
-  if (state.seenEvents.length || !CALENDLY_PAT || !CALENDLY_USER_URI) return;
+  if (primed) return;
 
-  const minStart = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
-  const maxStart = new Date(Date.now() + 180 * 24 * 3600 * 1000).toISOString();
-  const { collection = [] } = await calendlyGet(
-    "https://api.calendly.com/scheduled_events" +
-      `?user=${encodeURIComponent(CALENDLY_USER_URI)}` +
-      `&status=active&count=100&sort=start_time:asc` +
-      `&min_start_time=${encodeURIComponent(minStart)}` +
-      `&max_start_time=${encodeURIComponent(maxStart)}`,
-  );
+  if (!CALENDLY_PAT || !CALENDLY_USER_URI || state.seenEvents.length) {
+    primed = true;
+    return;
+  }
+
+  const collection = await calendlyListarTudo();
   state.seenEvents = collection.map((e) => e.uri);
+  primed = true;
   saveState();
   log(`primeira execução: ${state.seenEvents.length} agendamento(s) existente(s) marcados como já vistos (nada enviado)`);
 }
@@ -465,20 +602,28 @@ async function primeState() {
 
 loadState();
 
-server.listen(PORT, "127.0.0.1", async () => {
+server.listen(PORT, "127.0.0.1", () => {
   log(`ouvindo em 127.0.0.1:${PORT}${DRY_RUN ? " [DRY-RUN: nada é registrado]" : ""}`);
-  try {
-    await primeState();
-  } catch (err) {
-    log("aviso: não consegui semear o estado inicial:", err.message);
-  }
   if (CALENDLY_PAT && CALENDLY_USER_URI) {
     log(`poller do Calendly a cada ${POLL_MINUTES} min`);
+    // pollCalendly semeia o estado sozinho e se adia se o Calendly falhar.
     pollCalendly();
     setInterval(pollCalendly, POLL_MINUTES * 60 * 1000);
   } else {
     log("poller do Calendly desligado (sem CALENDLY_PAT/CALENDLY_USER_URI)");
   }
+});
+
+/**
+ * Rede de segurança: isto é uma ponte de telemetria. Derrubar o processo por
+ * causa de um request malformado é pior do que registrar e seguir servindo —
+ * era assim que um corpo `null` virava DoS com o systemd reiniciando em laço.
+ */
+process.on("unhandledRejection", (err) => {
+  log("rejeição não tratada:", err?.message || String(err));
+});
+process.on("uncaughtException", (err) => {
+  log("exceção não tratada:", err?.message || String(err));
 });
 
 for (const sig of ["SIGTERM", "SIGINT"]) {
