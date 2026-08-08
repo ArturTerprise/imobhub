@@ -69,7 +69,7 @@ site carimba o cookie `__oppref` no link do Calendly como `salesforce_uuid`
 ```bash
 # estado do serviço
 systemctl status openai-capi-bridge
-curl -s localhost:3390/healthz
+curl -s localhost:3391/healthz
 
 # log
 journalctl -u openai-capi-bridge -f

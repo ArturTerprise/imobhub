@@ -40,7 +40,7 @@ const env = (key, fallback) => {
   return v;
 };
 
-const PORT = Number(env("PORT", "3390"));
+const PORT = Number(env("PORT", "3391"));
 const PIXEL_ID = env("OPENAI_PIXEL_ID");
 const CAPI_KEY = env("OPENAI_CAPI_KEY");
 const CAPI_URL = `https://bzr.openai.com/v1/events?pid=${encodeURIComponent(PIXEL_ID)}`;
