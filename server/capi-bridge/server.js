@@ -281,6 +281,10 @@ async function handleRegistration(req, res) {
     data: { type: "customer_action", amount: 0, currency: CURRENCY },
   });
 
+  // Sem oppref a conversão chega mas não casa com o anúncio — e isso é o tipo
+  // de coisa que quebra calada. Fica no log para dar para auditar depois.
+  log(`registration_completed — oppref: ${oppref ? "sim" : "NÃO (sem atribuição)"}`);
+
   // Responde na hora: o form do site não pode ficar esperando a OpenAI.
   res.writeHead(204, {
     "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
